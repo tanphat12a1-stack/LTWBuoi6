@@ -1,0 +1,36 @@
+﻿@model List<LTWeb06_Bai01.Models.SanPham>
+
+@{
+    ViewBag.Title = "Danh sách sản phẩm";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+</head>
+<body>
+    <div class="row">
+        @foreach (var sp in Model)
+        {
+            <div class="col-md-4 mb-3">
+                <div class="card shadow-sm h-100">
+                    <div class="card-header text-center fw-bold text-bg-success">@sp.TenSP</div>
+
+                    <img src="~/Images/@sp.Hinh" class="card-img-top product-img" alt="@sp.TenSP" />
+
+                    <div class="card-body text-center">
+                        <p class="card-text text-danger fw-bold">Giá: @sp.Gia.ToString("N0") đ</p>
+                        <a href="@Url.Action("ChiTietSanPham","SanPham", new { masp = sp.MaSP })" class="btn btn-outline-primary btn-sm">Chi tiết</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</body>
+</html>
+
+

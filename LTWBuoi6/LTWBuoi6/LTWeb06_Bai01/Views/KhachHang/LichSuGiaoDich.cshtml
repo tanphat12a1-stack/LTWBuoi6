@@ -1,0 +1,60 @@
+﻿@model List<LTWeb06_Bai01.Models.HoaDon>
+
+@{
+    ViewBag.Title = "Lịch sử giao dịch";
+    var chiTietAll = ViewBag.ChiTiet as List<LTWeb06_Bai01.Models.ChiTiet>;
+    var dl = new LTWeb06_Bai01.Models.DuLieu();
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+</head>
+<body>
+    <table class="table table-bordered">
+        <thead class="table-success text-center">
+            <tr>
+                <th>Mã hóa đơn</th>
+                <th>Ngày tạo</th>
+                <th>Chi tiết</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var hd in Model)
+            {
+                <tr>
+                    <td>@hd.MaHoaDon</td>
+                    <td>@hd.NgayTao.ToString("dd/MM/yyyy")</td>
+                    <td>
+                        <table class="table table-sm table-bordered mb-0">
+                            <thead>
+                                <tr>
+                                    <th>Sản phẩm</th>
+                                    <th>Số lượng</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{
+                                    var chiTiet = chiTietAll.Where(c => c.MaHoaDon == hd.MaHoaDon).ToList();
+                                    foreach (var ct in chiTiet)
+                                    {
+                                        var sp = dl.dsSP.FirstOrDefault(s => s.MaSP == ct.MaSP);
+                                        <tr>
+                                            <td>@(sp != null ? sp.TenSP : ct.MaSP)</td>
+                                            <td>@ct.SoLuong</td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</body>
+</html>
+
